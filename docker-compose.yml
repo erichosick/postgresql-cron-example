@@ -1,0 +1,39 @@
+version: '3.7'
+
+# NOTE: Mapping is external then internal.
+#       Example '8091:8080' maps external port 8091 to internal port 8080.
+# NOTE: See https://docs.docker.com/compose/environment-variables/ for
+#       information about environment variables
+
+services:
+  # NOTE: Properties at service level are also the host name
+  root_db:
+    env_file:
+      - ./.env.local
+    # https://github.com/moby/moby/issues/29492
+    shm_size: 1g
+    container_name: cron-example-db
+    restart: always
+    image: cron-example-db
+    build:
+      # context: ./postgresql-12
+      # context: ./postgresql-13
+      context: ./images/postgresql-14
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - network
+    ports:
+      # for external port, use DB_PORT environment variable: defaulted to 5432
+      - ${POSTGRES_PORT-5432}:5432
+    healthcheck:
+      test: pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
+      interval: 10s
+      timeout: 2s
+      retries: 10
+
+volumes:
+  db_data: {}
+networks:
+  network:
+    driver: bridge
