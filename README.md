@@ -102,14 +102,6 @@ cron-example-db  | 2063-04-05 19:20:00.009 UTC [9722]
   STATEMENT:   REFRESH MATERIALIZED VIEW example2.opinion_activity;
 ```
 
-## Use Case
-
-You may want to consider the following design pattern if:
-
--
-
-You
-
 ## Setup
 
 ### Run This Example
