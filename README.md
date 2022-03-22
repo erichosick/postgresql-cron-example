@@ -162,7 +162,7 @@ docker volume rm postgresql-cron-example_db_data
 You will need to enable `pg_cron` for each RDS instance you want to use `pg_cron`.
 
 - With the Parameter group for the database instance:
-  - Set `cron.databse_name` to "example".
+  - Set `cron.databse_name` to "{your_database_name}".
   - Add `pg_cron` to `shared_preload_libraries`.
 
 #### Possible pg_cron Errors
